@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_service_control"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="uk.co.nhickling.lightnightv2.MainActivity"
+    >
+
+    <Button
+        android:id="@+id/btn_Stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/button3"
+        android:layout_below="@+id/button3"
+        android:onClick="btnClick_Stop"
+        android:text="Stop Service" />
+
+    <Button
+        android:id="@+id/btn_Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_Stop"
+        android:layout_alignBottom="@+id/btn_Stop"
+        android:layout_alignParentStart="true"
+        android:onClick="btnClick_Start"
+        android:text="Start Service" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btn_Stop"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txt_Result" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="55dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bar_Sens"
+        android:max="60"
+        android:progress="20"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="18dp"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btn_Stop"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/progressBar"
+        android:text="TextView" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/grphLvl"
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:layout_alignEnd="@+id/btn_Stop"
+        android:layout_above="@+id/bar_Sens"
+        android:layout_marginTop="18dp" />
+
+    <TextView
+        android:id="@+id/txt_Result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn_Stop"
+        android:text="TextView" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2"
+        android:id="@+id/pbServiceLoad"
+        android:layout_alignParentStart="true"
+        android:min="0"
+        android:max="100"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/btn_Stop"
+        android:text="" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:onClick="btnClick_Settings"
+        android:text="Settings" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:onClick="btnClick_Flash"
+        android:text="Flash" />
+</RelativeLayout>
