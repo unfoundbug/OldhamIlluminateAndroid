@@ -184,21 +184,31 @@ public class SoundService extends Service{
                     OutputStream os = scSendSocket.getOutputStream();
                     InputStream is = scSendSocket.getInputStream();
 
-                    byte byHead[] = new byte[2];
+                    byte byHead[] = new byte[3];
 
                     byte bSum = 0;
 
                     for(int i = 0; i < bSet.length; ++i)
                         bSum+= bSet[i];
-                    byHead[0] = (byte)bSet.length;
-                    byHead[1] = bSum;
-                    os.write(byHead,0,1);
+                    byHead[0] = (byte)(bSet.length >> 8);
+                    byHead[1] = (byte)(bSet.length);
+                    byHead[2] = bSum;
+                    os.write(byHead,0,2);
                     os.write(bSet);
-                    os.write(byHead, 1, 1);
+                    os.write(byHead, 2, 1);
                     bLastSend = true;
                 } catch (java.io.IOException e)
                 {
                     Log.i(TAG, "Exception: " + e.toString());
+
+                    scSendSocket= new Socket();
+                    try {
+                        scSendSocket.setSoTimeout(75);
+                    } catch(java.net.SocketException ex)
+                    {
+
+                    }
+
                 }finally {
                 }
             }
