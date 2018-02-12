@@ -167,7 +167,7 @@ public class SoundService extends Service{
 
                 double dFreq = iMaxFreq * bucketRatio;
                 bAssemble.putDouble("Average", dFreq);
-                bAssemble.putDouble("Load", dbLoad);
+                bAssemble.putDouble("Load", (double)iBytesRead / (double)iSamplesToRead);
                 bAssemble.putBoolean("Transmitting", bLastSend);
                 bAssemble.putByteArray("Data", bSet);
                 Message response = new Message();
@@ -191,12 +191,9 @@ public class SoundService extends Service{
 
                     DatagramPacket dp = new DatagramPacket(byHead, byHead.length, InetAddress.getByName("192.168.4.1"), 8080);
                     try {
-                        Log.i(TAG, "Sending data");
                         if(dSocket == null)
                             dSocket = new DatagramSocket();
-                        Log.i(TAG, "About Sending data");
                         dSocket.send(dp);
-                        Log.i(TAG, "Done Sending data");
                     }
                     catch(Exception ex) {
                         dSocket = null;
