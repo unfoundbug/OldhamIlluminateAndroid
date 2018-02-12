@@ -18,6 +18,8 @@ import com.paramsen.noise.NoiseOptimized;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -30,7 +32,7 @@ import static android.content.ContentValues.TAG;
 
 public class SoundService extends Service{
 
-
+    static DatagramSocket dSocket;
     static Socket scSendSocket;
     private class AudioThread implements Runnable{
         private MediaRecorder mRecorder = null;
@@ -48,6 +50,7 @@ public class SoundService extends Service{
             hostIntent =intent;
             hostMessage = (Messenger) intent.getParcelableExtra("messageReturn");
             scSendSocket= new Socket();
+
             try {
                 scSendSocket.setSoTimeout(75);
             } catch(java.net.SocketException ex)
@@ -93,7 +96,7 @@ public class SoundService extends Service{
                 boolean bFirstRead = true;
                 double dbLoad = 0;
                 try {
-                    Thread.sleep(25);
+                    Thread.sleep(50);
                 }catch(InterruptedException ex)
                 {}
                 iBytesRead = micRecorder.read(buffer2, 0, iSamplesToRead, AudioRecord.READ_NON_BLOCKING); // record data from mic into buffer
@@ -123,7 +126,10 @@ public class SoundService extends Service{
                     if(ftReal[iMaxFreq] < ftReal[i])
                         iMaxFreq = i;
                 }
-                bStream.write((int)bBassLevel);
+                if(bBassLevel > LightNightV2.bass_trim)
+                bStream.write((int) Math.sqrt(bBassLevel));
+                else
+                    bStream.write((int)0);
 
                 int iMaxBucket =(int) Math.min(ftReal.length, LightNightV2.treble_limit/ bucketRatio) - 1;
                 int iArrayOffset = (int) dMaxBassBucket;
@@ -173,29 +179,28 @@ public class SoundService extends Service{
                 }
                 bLastSend = false;
                 try {
-                    if(!scSendSocket.isConnected())
-                    {
-                        scSendSocket.connect(new InetSocketAddress(InetAddress.getByName("192.168.4.1"), 8080), 100);
-                    }
-                    if(!scSendSocket.isConnected())
-                    {
-                        return;
-                    }
-                    OutputStream os = scSendSocket.getOutputStream();
-                    InputStream is = scSendSocket.getInputStream();
-
-                    byte byHead[] = new byte[3];
-
+                    byte byHead[] = new byte[3 + bSet.length];
                     byte bSum = 0;
-
-                    for(int i = 0; i < bSet.length; ++i)
-                        bSum+= bSet[i];
                     byHead[0] = (byte)(bSet.length >> 8);
                     byHead[1] = (byte)(bSet.length);
-                    byHead[2] = bSum;
-                    os.write(byHead,0,2);
-                    os.write(bSet);
-                    os.write(byHead, 2, 1);
+                    for(int i = 0; i < bSet.length; ++i) {
+                        bSum += bSet[i];
+                        byHead[i+2] = bSet[i];
+                    }
+                    byHead[2+bSet.length] = bSum;
+
+                    DatagramPacket dp = new DatagramPacket(byHead, byHead.length, InetAddress.getByName("192.168.4.1"), 8080);
+                    try {
+                        Log.i(TAG, "Sending data");
+                        if(dSocket == null)
+                            dSocket = new DatagramSocket();
+                        Log.i(TAG, "About Sending data");
+                        dSocket.send(dp);
+                        Log.i(TAG, "Done Sending data");
+                    }
+                    catch(Exception ex) {
+                        dSocket = null;
+                    }
                     bLastSend = true;
                 } catch (java.io.IOException e)
                 {

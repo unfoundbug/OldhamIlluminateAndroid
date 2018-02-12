@@ -61,10 +61,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="10dp"
         android:text="Decrement"
         app:layout_constraintStart_toStartOf="@+id/sbIncrement"
         app:layout_constraintTop_toBottomOf="@+id/sbIncrement" />
+
+    <TextView
+        android:id="@+id/tvBassThresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="10dp"
+        android:text="BassThreashold"
+        app:layout_constraintStart_toStartOf="@+id/sbDecrement"
+        app:layout_constraintTop_toBottomOf="@+id/sbDecrement" />
 
     <SeekBar
         android:id="@+id/sbIncrement"
@@ -74,7 +84,7 @@
         android:layout_marginBottom="19dp"
         android:layout_marginEnd="14dp"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="0dp"
         android:max="10"
         android:progress="3"
         app:layout_constraintBottom_toTopOf="@+id/sbDecrement"
@@ -89,12 +99,26 @@
         android:layout_height="20dp"
         android:layout_marginEnd="13dp"
         android:layout_marginStart="13dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="0dp"
         android:max="10"
         android:progress="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIF" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDec" />
+
+    <SeekBar
+        android:id="@+id/sbBassThresh"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="0dp"
+        android:max="20"
+        android:progress="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBassThresh" />
 
     <Button
         android:id="@+id/button"

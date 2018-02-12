@@ -36,6 +36,7 @@ public class LightNightV2 extends Application{
         SharedPreferences.Editor ed = sp.edit();
         ed.putFloat("SenseLim", (float)SenseLimit);
         ed.putFloat("bass_threshold", (float)bass_threshold);
+        ed.putFloat("bass_trim", (float)bass_trim);
         ed.putFloat("treble_limit", (float)treble_limit);
         ed.putInt("envelope_count", envelope_count);
         ed.putInt("envelope_IncrementFactor", envelope_IncrementFactor);
@@ -48,6 +49,7 @@ public class LightNightV2 extends Application{
         SharedPreferences sp = getContext().getSharedPreferences("OlLighNight", 0);
         SenseLimit = sp.getFloat("SenseLim", 20);
         bass_threshold = sp.getFloat("bass_threshold", 300);
+        bass_trim = sp.getFloat("bass_trim", 10);
         treble_limit = sp.getFloat("treble_limit", 2000);
         envelope_count = 93*3;//sp.getInt("envelope_count", 93*3);
         envelope_IncrementFactor = sp.getInt("envelope_IncrementFactor", 4);
@@ -58,6 +60,7 @@ public class LightNightV2 extends Application{
     public static double SenseLimit = 20;
 
     public static double bass_threshold = 300;
+    public static double bass_trim = 10;
     public static double treble_limit = 2000; //highest frequency
 	
 	

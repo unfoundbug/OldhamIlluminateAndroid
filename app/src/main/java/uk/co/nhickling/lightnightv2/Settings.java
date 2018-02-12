@@ -16,7 +16,7 @@ public class Settings extends AppCompatActivity {
     Spinner m_sHighLimit;
     SeekBar m_bIncrement;
     SeekBar m_bDecrement;
-
+    SeekBar m_bBass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +28,7 @@ public class Settings extends AppCompatActivity {
         m_sHighLimit = (Spinner) findViewById(R.id.spHFL);
         m_bIncrement = findViewById(R.id.sbIncrement);
         m_bDecrement = findViewById(R.id.sbDecrement);
-
+        m_bBass = findViewById(R.id.sbBassThresh);
         {
             String compareValue = String.valueOf((int) LightNightV2.bass_threshold);
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spLPFilter, android.R.layout.simple_spinner_dropdown_item);
@@ -53,7 +53,7 @@ public class Settings extends AppCompatActivity {
 
         m_bDecrement.setProgress(LightNightV2.envelope_Deccrement / 10);
 
-
+        m_bBass.setProgress((int)LightNightV2.bass_trim);
     }
 
 
@@ -67,7 +67,7 @@ public class Settings extends AppCompatActivity {
         LightNightV2.bass_threshold = Double.parseDouble((String)m_sBassPass.getSelectedItem());
         LightNightV2.envelope_IncrementFactor = m_bIncrement.getProgress();
         LightNightV2.envelope_Deccrement = m_bDecrement.getProgress() * 10;
-
+        LightNightV2.bass_trim = m_bBass.getProgress();
         LightNightV2.Save();
 
         btnClick_Cancel(null);
